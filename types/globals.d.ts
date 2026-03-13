@@ -18,4 +18,5 @@ interface Document {
 
 interface Window {
   addCleanup(fn: (...args: unknown[]) => void): void;
+  spaNavigate?(url: URL, isBack: boolean): Promise<void>;
 }

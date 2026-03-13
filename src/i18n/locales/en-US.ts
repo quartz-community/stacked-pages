@@ -3,5 +3,8 @@ export default {
     example: {
       title: "Example",
     },
+    stackedPages: {
+      closeTab: "Close tab",
+    },
   },
 };

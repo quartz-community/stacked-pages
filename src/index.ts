@@ -10,6 +10,10 @@ export type {
 } from "./types";
 
 export type { ExampleComponentOptions } from "./components/ExampleComponent";
+export { default as StackedPages } from "./components/StackedPages";
+export type { StackedPagesComponentOptions } from "./components/StackedPages";
+
+export type { StackedPagesOptions } from "./types";
 
 // Re-export shared types from @quartz-community/types
 export type {

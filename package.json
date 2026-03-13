@@ -1,7 +1,7 @@
 {
-  "name": "@quartz-community/plugin-template",
+  "name": "@quartz-community/stacked-pages",
   "version": "0.1.0",
-  "description": "Template repository for Quartz community plugins.",
+  "description": "Binder-style stacked page tabs for Quartz v5.",
   "type": "module",
   "license": "MIT",
   "author": "Quartz Community",
@@ -13,11 +13,9 @@
   "keywords": [
     "quartz",
     "quartz-plugin",
-    "plugin-template",
-    "remark",
-    "rehype",
-    "mdast",
-    "hast"
+    "stacked-pages",
+    "binder",
+    "tabs"
   ],
   "files": [
     "dist",
@@ -92,29 +90,38 @@
     "vitest": "^2.1.9"
   },
   "quartz": {
-    "name": "plugin-template",
-    "displayName": "Plugin Template",
-    "category": "transformer",
+    "name": "stacked-pages",
+    "displayName": "Stacked Pages",
+    "category": "component",
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",
     "dependencies": [],
     "defaultOrder": 50,
     "defaultEnabled": true,
-    "defaultOptions": {},
+    "defaultOptions": {
+      "maxTabs": 8,
+      "mobileBreakpoint": 800,
+      "showSpines": true,
+      "animateTransitions": true
+    },
     "optionSchema": {
-      "highlightToken": {
-        "type": "enum",
-        "values": [
-          "==",
-          "**",
-          "~~"
-        ]
+      "maxTabs": {
+        "type": "number"
+      },
+      "mobileBreakpoint": {
+        "type": "number"
+      },
+      "showSpines": {
+        "type": "boolean"
+      },
+      "animateTransitions": {
+        "type": "boolean"
       }
     },
     "components": {
-      "ExampleComponent": {
-        "displayName": "Example Component",
-        "defaultPosition": "right",
+      "StackedPages": {
+        "displayName": "Stacked Pages",
+        "defaultPosition": "afterBody",
         "defaultPriority": 50
       }
     }
