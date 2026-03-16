@@ -3,7 +3,7 @@ import type {
   QuartzComponentProps,
   QuartzComponentConstructor,
 } from "@quartz-community/types";
-import type { StackedPagesOptions } from "../types";
+
 import style from "./styles/stacked.scss";
 // @ts-expect-error - inline script import handled by Quartz bundler
 import script from "./scripts/stacked.inline.ts";

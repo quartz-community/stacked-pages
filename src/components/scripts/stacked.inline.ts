@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Stacked Pages — Binder-style tab navigation for Quartz v5
 //
 // Architecture:
@@ -49,17 +48,19 @@ export function loadState(): BinderState {
         return parsed;
       }
     }
-  } catch {}
+  } catch {
+    // Ignore corrupted state
+  }
   return { tabs: [], activeIndex: -1 };
 }
 
 export function saveState(state: BinderState): void {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {}
+  } catch {
+    // Ignore storage write failures (e.g. quota exceeded, private browsing)
+  }
 }
-
-// ── Config ────────────────────────────────────────────────────────────
 
 function readConfig(container: HTMLElement) {
   return {
@@ -104,7 +105,8 @@ function renderBinder(container: HTMLElement, state: BinderState) {
     const leftStrip = document.createElement("div");
     leftStrip.className = "binder-strip binder-strip-left";
     for (let i = 0; i < leftTabs.length; i++) {
-      leftStrip.appendChild(createTabElement(leftTabs[i], i, "left", state, config));
+      const tab = leftTabs[i]!;
+      leftStrip.appendChild(createTabElement(tab, i, "left", state, config));
     }
     container.appendChild(leftStrip);
   }
@@ -115,7 +117,8 @@ function renderBinder(container: HTMLElement, state: BinderState) {
     rightStrip.className = "binder-strip binder-strip-right";
     for (let i = 0; i < rightTabs.length; i++) {
       const realIndex = state.activeIndex + 1 + i;
-      rightStrip.appendChild(createTabElement(rightTabs[i], realIndex, "right", state, config));
+      const tab = rightTabs[i]!;
+      rightStrip.appendChild(createTabElement(tab, realIndex, "right", state, config));
     }
     container.appendChild(rightStrip);
   }
@@ -179,6 +182,7 @@ function navigateToTab(index: number) {
   if (index < 0 || index >= state.tabs.length) return;
 
   const tab = state.tabs[index];
+  if (!tab) return;
   // Update active index before navigation so the nav handler knows this is a tab switch
   state.activeIndex = index;
   saveState(state);
@@ -240,7 +244,7 @@ function handleNavigation() {
 
   if (existingIndex >= 0) {
     // Tab already exists — just switch to it, update title in case it changed
-    state.tabs[existingIndex].title = title;
+    state.tabs[existingIndex]!.title = title;
     state.activeIndex = existingIndex;
   } else {
     // New page — insert as a new tab after the current active tab
