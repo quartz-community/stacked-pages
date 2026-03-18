@@ -7,6 +7,8 @@
 //   - Tab clicks use window.spaNavigate() — the Quartz-approved navigation API
 //   - The binder is a pure UI overlay rendered beside the page content
 
+import { resolveBasePath } from "@quartz-community/utils/path";
+
 // ── Types ─────────────────────────────────────────────────────────────
 
 interface Tab {
@@ -188,7 +190,7 @@ function navigateToTab(index: number) {
   saveState(state);
 
   // Use Quartz's SPA navigation
-  const url = new URL(`/${tab.slug}`, window.location.origin);
+  const url = new URL(resolveBasePath(tab.slug), window.location.origin);
   if (window.spaNavigate) {
     window.spaNavigate(url, false);
   } else {
