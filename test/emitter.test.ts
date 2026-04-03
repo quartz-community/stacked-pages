@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
+import type { FullSlug, FilePath } from "@quartz-community/types";
 import { ExampleEmitter } from "../src/emitter";
 import { createCtx, createProcessedContent } from "./helpers";
 
@@ -13,8 +14,8 @@ describe("ExampleEmitter", () => {
 
     const content = [
       createProcessedContent({
-        slug: "hello-world",
-        filePath: "notes/hello-world.md",
+        slug: "hello-world" as FullSlug,
+        filePath: "notes/hello-world.md" as FilePath,
         frontmatter: { title: "Hello", tags: ["docs"] },
       }),
     ];
