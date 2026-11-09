@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- 6c46621: The example transformer's `addHeadingSlugs` option now gives headings their ids with the shared `HeadingSlugger` from `@quartz-community/utils` instead of `rehype-slug`. The ids are the same as before, and the package no longer depends on `rehype-slug`.
+
 ## 1.0.1
 
 ### Patch Changes
