@@ -29,30 +29,3 @@ export interface StackedPagesOptions {
   /** Enable slide animations when switching tabs. Default: true */
   animateTransitions: boolean;
 }
-
-export interface ExampleTransformerOptions {
-  highlightToken: string;
-  headingClass: string;
-  enableGfm: boolean;
-  addHeadingSlugs: boolean;
-}
-
-export interface ExampleFilterOptions {
-  allowDrafts: boolean;
-  excludeTags: string[];
-  excludePathPrefixes: string[];
-}
-
-export interface ExampleEmitterOptions {
-  manifestSlug: string;
-  includeFrontmatter: boolean;
-  metadata: Record<string, unknown>;
-  transformManifest?: (json: string) => string;
-  manifestScriptClass?: string;
-}
-
-export interface ExampleComponentOptions {
-  prefix?: string;
-  suffix?: string;
-  className?: string;
-}
