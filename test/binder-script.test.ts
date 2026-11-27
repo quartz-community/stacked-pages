@@ -171,15 +171,26 @@ describe("stacked pages binder script", () => {
     expect(b.navigated).toEqual(["/index"]);
   });
 
-  // bug: the tab's slug is taken from location.pathname, which includes the site's base path
-  // ("/sub/notes/a" → "sub/notes/a"), and resolveBasePath() adds the base path again when a tab
-  // is clicked: on a site served under a sub-path every tab leads to /sub/sub/… (a 404).
-  it.fails("navigates to the right URL on a site with a base path", () => {
+  // The tab's slug is taken from location.pathname, which includes the site's base path; it used to
+  // be kept, and resolveBasePath() added the base path again when a tab was clicked (/sub/sub/…).
+  it("navigates to the right URL on a site with a base path", () => {
     const b = browser({ basePath: "/sub" });
     runInline(script);
     b.visit("/sub/", "Home");
     b.visit("/sub/notes/a", "A");
     b.container.find("binder-tab")[0]!.dispatchEvent(new Event("click"));
     expect(b.navigated[0]).toMatch(/^\/sub\/(index)?$/);
+    b.container.find("binder-tab")[1]!.dispatchEvent(new Event("click"));
+    expect(b.navigated[1]).toBe("/sub/notes/a");
+  });
+
+  it("strips the base path only as a whole leading segment", () => {
+    const b = browser({ basePath: "/sub" });
+    runInline(script);
+    b.visit("/sub", "Home");
+    b.visit("/subway/a", "A");
+    b.container.find("binder-tab")[0]!.dispatchEvent(new Event("click"));
+    b.container.find("binder-tab")[1]!.dispatchEvent(new Event("click"));
+    expect(b.navigated).toEqual(["/sub/index", "/sub/subway/a"]);
   });
 });
