@@ -7,7 +7,7 @@
 //   - Tab clicks use window.spaNavigate() — the Quartz-approved navigation API
 //   - The binder is a pure UI overlay rendered beside the page content
 
-import { resolveBasePath } from "@quartz-community/utils/path";
+import { getBasePath, resolveBasePath } from "@quartz-community/utils/path";
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -27,8 +27,11 @@ const STORAGE_KEY = "stacked-pages-state";
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
+/** The page's slug, without the site's base path (navigateToTab adds it back). */
 function getCurrentSlug(): string {
   let slug = window.location.pathname;
+  const base = getBasePath();
+  if (base && (slug === base || slug.startsWith(base + "/"))) slug = slug.slice(base.length);
   if (slug.startsWith("/")) slug = slug.slice(1);
   if (slug.endsWith("/")) slug = slug.slice(0, -1);
   return slug || "index";
